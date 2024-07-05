@@ -1,21 +1,24 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'package:quiz/questions.dart';
+import 'package:quiz/answer_button.dart';
+import 'package:quiz/data/questions.dart';
 
-class Quiz extends StatefulWidget{
-  const Quiz({super.key});
+class QuestionScreen extends StatefulWidget{
+  const QuestionScreen({super.key});
   
   @override
-  State<Quiz> createState(){
+  State<QuestionScreen> createState(){
     return _QuizState();
   }
 }
 
-class _QuizState extends State<Quiz>{
+class _QuizState extends State<QuestionScreen>{
   @override
   
   Widget build(context)
   {
+    final currentQuestion = questions[0];
+
     return MaterialApp(
       home: Scaffold(
         body: Stack(
@@ -33,11 +36,31 @@ class _QuizState extends State<Quiz>{
                 child: Container(
                   color: Colors.transparent,),),),
             
-            const Center(
+            Center(
               child: Column(
+                mainAxisSize: MainAxisSize.min,
                 children: [
-                  Question(),
-                ],)
+                  Text(
+                    currentQuestion.text,
+                    style: const TextStyle(
+                      fontSize: 20,
+                      color: Colors.white,
+                      ),
+                  ),
+
+                  const SizedBox(height: 30,),
+
+                  ...currentQuestion.answers.map((answers) {
+                    return AnswerButton(
+                      answerText: answers, 
+                      onTap: () {},
+                      );
+                  }),
+                  // AnswerButton("one", () {},),
+                  // AnswerButton("two", () {},),
+                  // AnswerButton("three", () {},),
+                  // AnswerButton("four", () {},),
+                ],),
             ),
           ],
         )

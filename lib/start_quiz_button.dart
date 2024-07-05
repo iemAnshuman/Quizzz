@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
-// import 'package:quiz/quiz1.dart';
+import 'package:quiz/question_screen.dart';
+//import 'package:quiz/questions.dart';
+//import 'package:quiz/question_screen.dart';
+//import 'package:quiz/quiz.dart';
 
 class StartQuiz extends StatefulWidget{
-  const StartQuiz({super.key});
+  const StartQuiz(this.switchScreen, {super.key});
+
+  final void Function() switchScreen;
 
   @override
   State<StartQuiz> createState(){
@@ -23,7 +28,7 @@ class _StartQuiz extends State<StartQuiz>{
       onPressed: () {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => Quiz()),
+          MaterialPageRoute(builder: (context) => const QuestionScreen()),
         );
       },
       

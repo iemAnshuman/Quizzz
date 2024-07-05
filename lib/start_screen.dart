@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:quiz/start_quiz_button.dart';
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class StartScreen extends StatelessWidget {
+  const StartScreen(this.switchScreen, {super.key});
+
+  final void Function() switchScreen;
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +19,7 @@ class MyApp extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 150,),
-                  const StartQuiz(),
+                  StartQuiz(switchScreen),
                 ],
               ),
             );
