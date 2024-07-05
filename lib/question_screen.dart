@@ -2,9 +2,12 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:quiz/answer_button.dart';
 import 'package:quiz/data/questions.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class QuestionScreen extends StatefulWidget{
-  const QuestionScreen({super.key});
+  const QuestionScreen({required this.onSelectAnswer ,super.key});
+
+  final void Function(String answer) onSelectAnswer;
   
   @override
   State<QuestionScreen> createState(){
@@ -13,11 +16,20 @@ class QuestionScreen extends StatefulWidget{
 }
 
 class _QuizState extends State<QuestionScreen>{
-  @override
+  var currentQuestionIndex = 0;
+
+  void answered(String selectedAnswer){
+    widget.onSelectAnswer(selectedAnswer);
+
+   setState(() {
+     currentQuestionIndex++;
+   });
+  }
   
+  @override
   Widget build(context)
   {
-    final currentQuestion = questions[0];
+    final currentQuestion = questions[currentQuestionIndex];
 
     return MaterialApp(
       home: Scaffold(
@@ -42,24 +54,23 @@ class _QuizState extends State<QuestionScreen>{
                 children: [
                   Text(
                     currentQuestion.text,
-                    style: const TextStyle(
-                      fontSize: 20,
-                      color: Colors.white,
-                      ),
+                    style: GoogleFonts.nunito(
+                      color: const Color.fromARGB(255, 232, 255, 231),
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
 
                   const SizedBox(height: 30,),
 
-                  ...currentQuestion.answers.map((answers) {
+                  ...currentQuestion.getShuffledAnswers().map((answer) {
                     return AnswerButton(
-                      answerText: answers, 
-                      onTap: () {},
+                      answerText: answer, 
+                      onTap: (){
+                        answered(answer);
+                      },
                       );
                   }),
-                  // AnswerButton("one", () {},),
-                  // AnswerButton("two", () {},),
-                  // AnswerButton("three", () {},),
-                  // AnswerButton("four", () {},),
                 ],),
             ),
           ],
