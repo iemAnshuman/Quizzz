@@ -11,11 +11,11 @@ class QuestionScreen extends StatefulWidget{
   
   @override
   State<QuestionScreen> createState(){
-    return _QuizState();
+    return _QuestionScreenState();
   }
 }
 
-class _QuizState extends State<QuestionScreen>{
+class _QuestionScreenState extends State<QuestionScreen>{
   var currentQuestionIndex = 0;
 
   void answered(String selectedAnswer){
@@ -31,51 +31,39 @@ class _QuizState extends State<QuestionScreen>{
   {
     final currentQuestion = questions[currentQuestionIndex];
 
-    return MaterialApp(
-      home: Scaffold(
-        body: Stack(
-          children: [
-            Positioned.fill(
-              child: Image.asset(
-              'assets/images/forest.jpeg',
-              fit: BoxFit.cover,
-              ),
-            ),
-
-            Positioned.fill(
-              child: BackdropFilter(
-                filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
-                child: Container(
-                  color: Colors.transparent,),),),
-            
-            Center(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    currentQuestion.text,
-                    style: GoogleFonts.nunito(
-                      color: const Color.fromARGB(255, 232, 255, 231),
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                    ),
+    return BackdropFilter(
+      filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
+      child: Container(
+        color: Colors.transparent,
+        child: Center(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: Text(
+                  currentQuestion.text,
+                  textAlign: TextAlign.center,
+                  style: GoogleFonts.nunito(
+                    color: const Color.fromARGB(255, 232, 255, 231),
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
                   ),
-
-                  const SizedBox(height: 30,),
-
-                  ...currentQuestion.getShuffledAnswers().map((answer) {
-                    return AnswerButton(
-                      answerText: answer, 
-                      onTap: (){
-                        answered(answer);
-                      },
-                      );
-                  }),
-                ],),
-            ),
-          ],
-        )
-        )
-      );
+                ),
+              ),
+              const SizedBox(height: 30,),
+              ...currentQuestion.getShuffledAnswers().map((answer) {
+                return AnswerButton(
+                  answerText: answer, 
+                  onTap: (){
+                    answered(answer);
+                  },
+                );
+              }),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }
