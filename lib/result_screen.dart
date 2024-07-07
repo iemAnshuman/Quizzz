@@ -8,6 +8,17 @@ class ResultScreen extends StatelessWidget{
 
   final List<String> choosenAnswers;
 
+  int getSummaryData(){
+    int summary = 0;
+  
+    for(int i = 0; i < choosenAnswers.length; i++)
+    {
+      
+    }
+  
+    return summary;
+  }
+
   @override
   Widget build(BuildContext context) {
     return BackdropFilter(
